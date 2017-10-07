@@ -20,7 +20,7 @@ public class TrackConstructor : MonoBehaviour {
     private bool initialized = false;
 
     private List<Vector2> trackTransforms = new List<Vector2>();
-    private Transform trackHolder;
+    public Transform trackHolder;
     private List<TubeTransformer> currentObjects = new List<TubeTransformer>();
 
     private int currentSegment = 0;
@@ -42,11 +42,10 @@ public class TrackConstructor : MonoBehaviour {
         maxAnglePhi = Mathf.PI / 2.0f * diversity;
         maxAngleTheta = Mathf.PI / 2.0f * diversity;
 
-        nextTubePosition = new Vector3();
+        nextTubePosition = trackHolder.position;
 
         GetTrackLength();
 
-        trackHolder = new GameObject("Track").transform;
     }
 
     void GetTrackLength()
@@ -81,7 +80,8 @@ public class TrackConstructor : MonoBehaviour {
         Vector3 currentPos = nextTubePosition;
         if (!initialized)
         {
-            for (int i = 0; i < drawNumber; i++)
+
+            for (int i = 0; i < Math.Min(drawNumber, length); i++)
             {
                 Vector2 currentTrans = trackTransforms[i];
 
@@ -111,14 +111,13 @@ public class TrackConstructor : MonoBehaviour {
 
     Vector3 DrawTube(Vector3 currentPos, Vector2 transform)
     {
-        Quaternion rotation = Quaternion.identity;
+        Quaternion rotation = Quaternion.AngleAxis(90, new Vector3(0,1,0));
         if (currentObjects.Count > 0)
         {
             rotation = currentObjects[currentObjects.Count - 1].daughterJoint.rotation;
         }
         TubeTransformer instanceTube = Instantiate<TubeTransformer>(tubeSegment, currentPos, Quaternion.identity);
-        GameObject instanceJoint = Instantiate(joint, instanceTube.daughterJoint.position, Quaternion.identity);
-
+        
         instanceTube.motherJoint.rotation = rotation;
         instanceTube.RotateJoint(transform[0], transform[1]);
 
