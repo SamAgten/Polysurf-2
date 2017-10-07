@@ -95,7 +95,7 @@ public class TrackConstructor : MonoBehaviour {
             Destroy(currentObjects[0].gameObject);
             currentObjects.Remove(currentObjects[0]);
 
-            Vector2 currentTrans = trackTransforms[currentSegment + drawNumber];
+            Vector2 currentTrans = trackTransforms[Math.Min(length, currentSegment + drawNumber)];
 
             currentPos = DrawTube(currentPos, currentTrans);
 
@@ -131,7 +131,15 @@ public class TrackConstructor : MonoBehaviour {
 
     public Vector3 GetInverseDirection()
     {
-        Vector3 direction = currentObjects[currentSegment].transform.position - currentObjects[currentSegment + 1].transform.position;
+        Vector3 direction = new Vector3();
+        if (currentObjects[0].motherJoint.position.z < 0)
+        {
+            direction = currentObjects[0].motherJoint.position - currentObjects[0].daughterJoint.position;
+        }
+        else
+        {
+            direction = currentObjects[0].daughterJoint.position - currentObjects[1].motherJoint.position;
+        }
         return direction;
     }
     public Quaternion GetDaughterRotation(int hop = 0)
@@ -153,11 +161,11 @@ public class TrackConstructor : MonoBehaviour {
     public void Translate(Vector3 translation)
     {
         trackHolder.transform.Translate(translation);
-        /*if (currentObjects[1].transform.position.z < 0)
+        if (currentObjects[1].transform.position.z < 0)
         {
             currentSegment += 1;
             DrawTrack();
-        }*/
+        }
     }
 
     public void SetRotation(Quaternion q)
