@@ -130,6 +130,12 @@ public class TrackConstructor : MonoBehaviour {
         return targetPos;
     }
 
+    Vector3 GetCurrentDirection()
+    {
+        Vector3 direction = currentObjects[currentSegment].transform.position - currentObjects[currentSegment + 1].transform.position;
+        return direction;
+    }
+
     void Translate(Vector3 translation)
     {
         trackHolder.transform.Translate(translation);
