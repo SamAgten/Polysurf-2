@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerVehicleAvatar : MonoBehaviour 
 {
 	public float colorChangeSmoothness = 2f;
+	public float colorChangeScaleSmoothness = 10f;
 	public float colorChangeScale = 1.5f;
 
 	private Color targetColor;
@@ -27,7 +28,7 @@ public class PlayerVehicleAvatar : MonoBehaviour
 	{
 		renderer.material.color = Color.Lerp(renderer.material.color, targetColor, Time.deltaTime * colorChangeSmoothness);
 		mainPs.startColor = Color.Lerp(mainPs.startColor.color, targetColor, Time.deltaTime * colorChangeSmoothness);
-		transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, Time.deltaTime * colorChangeSmoothness);
+		transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, Time.deltaTime * colorChangeScaleSmoothness);
 	}
 
 	public virtual void SetColor(Color color)

@@ -8,6 +8,10 @@ public class CameraController : MonoBehaviour
 	public float cameraTrackingSmoothness = 2f;
 	public float elasticity = 2f;
 	public float snapBackDistance = 20f;
+	[SerializeField] private float m_SwaySpeed = .5f;
+        [SerializeField] private float m_BaseSwayAmount = .5f;
+        [SerializeField] private float m_TrackingSwayAmount = .5f;
+        [Range(-1, 1)] [SerializeField] private float m_TrackingBias = 0;
 
 	private bool trackingPlayer = false;
 	private Vector3 relativeCameraPosition;
@@ -20,13 +24,7 @@ public class CameraController : MonoBehaviour
 	{
 		colorManager.onColorSelected += SnapBack;
 	}
-
-
-	void Start()
-	{
-		StartTrackingPlayer();
-	}
-
+	
 	void Update()
 	{
 		if(trackingPlayer)
@@ -36,6 +34,22 @@ public class CameraController : MonoBehaviour
 			Vector3 desiredPosition = player.transform.position + relativeCameraPosition * relativePlayerDistance;
 
 			transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * cameraTrackingSmoothness);
+		}
+		else
+		{
+			 float bx = (Mathf.PerlinNoise(0, Time.time*m_SwaySpeed) - 0.5f);
+            float by = (Mathf.PerlinNoise(0, (Time.time*m_SwaySpeed) + 100)) - 0.5f;
+
+            bx *= m_BaseSwayAmount;
+            by *= m_BaseSwayAmount;
+
+            float tx = (Mathf.PerlinNoise(0, Time.time*m_SwaySpeed) - 0.5f) + m_TrackingBias;
+            float ty = ((Mathf.PerlinNoise(0, (Time.time*m_SwaySpeed) + 100)) - 0.5f) + m_TrackingBias;
+
+            tx *= -m_TrackingSwayAmount;
+            ty *= m_TrackingSwayAmount;
+
+            transform.Rotate(bx + tx, by + ty, 0);
 		}
 	}
 

@@ -1,26 +1,27 @@
 fileFormatVersion: 2
-guid: 1747843cf547cf749bc7372c5af78544
-timeCreated: 1507377010
+guid: 0f70f2aa14905d046b732faec7b525b1
+timeCreated: 1507394768
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
     100000: Bone
-    100002: Bone_001
-    100004: //RootNode
-    100006: TubeSegment
-    100008: TubeSegmentArmature
+    100002: Bone.001
+    100004: Bone.001_end
+    100006: //RootNode
+    100008: TubeSegment
+    100010: TubeSegmentArmature
     400000: Bone
-    400002: Bone_001
-    400004: //RootNode
-    400006: TubeSegment
-    400008: TubeSegmentArmature
+    400002: Bone.001
+    400004: Bone.001_end
+    400006: //RootNode
+    400008: TubeSegment
+    400010: TubeSegmentArmature
     4300000: TubeSegment
-    7400000: Default Take
     9500000: //RootNode
     13700000: TubeSegment
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:

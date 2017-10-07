@@ -141,6 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7391923aeb293349bc78b3593882c50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorChangeSmoothness: 2
+  colorChangeScaleSmoothness: 10
+  colorChangeScale: 2
 --- !u!198 &198508910814773552
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -197,7 +200,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: -1430189765

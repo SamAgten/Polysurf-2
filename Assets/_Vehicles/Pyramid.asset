@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5fb7965e9ddcb4e8ad84d99c91a687, type: 3}
   m_Name: Pyramid
   m_EditorClassIdentifier: 
-  vehicle: {fileID: 1814240895813666, guid: 3345ef43d8d024646adb9247e3bcca44, type: 2}
+  vehicle: {fileID: 114938191342812704, guid: 3345ef43d8d024646adb9247e3bcca44, type: 2}
   moveSpeed: 1
