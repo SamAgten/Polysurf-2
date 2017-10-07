@@ -97,4 +97,12 @@ public class Player : MonoBehaviour
 		
 		animation.SetAnimationSpeed(1.5f, false);
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Gate"))
+        {
+
+        }
+    }
 }
