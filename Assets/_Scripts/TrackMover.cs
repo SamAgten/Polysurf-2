@@ -16,10 +16,10 @@ public class TrackMover : MonoBehaviour {
         Quaternion initRot = constructor.GetMotherRotation(0);
         Quaternion nextRot = constructor.GetDaughterRotation(0);
 
-        float t = (turnDistance - constructor.GetJointPosition(0).magnitude) / turnDistance;
+        float t = Mathf.Min(1f, Mathf.Max(0, constructor.GetJointDistance(0)-turnDistance)/2f*turnDistance);
 
         Quaternion inverseRot = Quaternion.Inverse(Quaternion.Slerp(initRot, nextRot, t));
 
-        constructor.Rotate(inverseRot);
+        //constructor.Rotate(inverseRot);
 	}
 }

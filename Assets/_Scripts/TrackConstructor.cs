@@ -144,20 +144,20 @@ public class TrackConstructor : MonoBehaviour {
         return currentObjects[hop].motherJoint.rotation;
     }
 
-    public Vector3 GetJointPosition(int hop = 0)
+    public float GetJointDistance(int hop = 0)
     {
-        return currentObjects[hop].daughterJoint.position;
+        return Vector3.Distance(trackHolder.transform.position, currentObjects[hop].daughterJoint.position);
     }
 
 
     public void Translate(Vector3 translation)
     {
         trackHolder.transform.Translate(translation);
-        if (currentObjects[1].transform.position.z < 0)
+        /*if (currentObjects[1].transform.position.z < 0)
         {
             currentSegment += 1;
             DrawTrack();
-        }
+        }*/
     }
 
     public void SetRotation(Quaternion q)
@@ -167,7 +167,7 @@ public class TrackConstructor : MonoBehaviour {
 
     public void Rotate(Quaternion q)
     {
-        trackHolder.transform.Rotate(q.eulerAngles);
+        trackHolder.transform.rotation = q;
     }
 
     float SamplePhi(string mode)
