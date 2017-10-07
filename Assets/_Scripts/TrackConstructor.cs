@@ -123,28 +123,51 @@ public class TrackConstructor : MonoBehaviour {
 
         Vector3 targetPos = instanceTube.daughterJoint.position + -pieceLength / 2f * instanceTube.daughterJoint.right;
 
-
-
         currentObjects.Add(instanceTube);
 
         instanceTube.transform.SetParent(trackHolder);
         return targetPos;
     }
 
-    Vector3 GetCurrentDirection()
+    public Vector3 GetInverseDirection()
     {
         Vector3 direction = currentObjects[currentSegment].transform.position - currentObjects[currentSegment + 1].transform.position;
         return direction;
     }
-
-    void Translate(Vector3 translation)
+    public Quaternion GetDaughterRotation(int hop = 0)
     {
-        trackHolder.transform.Translate(translation);
+        return currentObjects[hop].daughterJoint.rotation;
     }
 
-    void Rotate(Vector3 rot)
+    public Quaternion GetMotherRotation(int hop = 0)
     {
-        trackHolder.transform.Rotate(rot);
+        return currentObjects[hop].motherJoint.rotation;
+    }
+
+    public Vector3 GetJointPosition(int hop = 0)
+    {
+        return currentObjects[hop].daughterJoint.position;
+    }
+
+
+    public void Translate(Vector3 translation)
+    {
+        trackHolder.transform.Translate(translation);
+        if (currentObjects[1].transform.position.z < 0)
+        {
+            currentSegment += 1;
+            DrawTrack();
+        }
+    }
+
+    public void SetRotation(Quaternion q)
+    {
+        trackHolder.transform.SetPositionAndRotation(trackHolder.transform.position, q);
+    }
+
+    public void Rotate(Quaternion q)
+    {
+        trackHolder.transform.Rotate(q.eulerAngles);
     }
 
     float SamplePhi(string mode)
