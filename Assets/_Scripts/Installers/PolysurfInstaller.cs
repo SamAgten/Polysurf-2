@@ -9,5 +9,8 @@ public class PolysurfInstaller : MonoInstaller<PolysurfInstaller>
         
         Flash flash = FindObjectOfType<Flash>();
         Container.BindInstance(flash).AsSingle();
+
+        CameraController cameraController = FindObjectOfType<CameraController>();
+        Container.BindInstance(cameraController).AsSingle();
     }
 }

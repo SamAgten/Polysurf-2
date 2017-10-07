@@ -11,8 +11,6 @@ public class PlayerVehicleAnimation : MonoBehaviour
 
 	public Vector3 rotationSpeed = new Vector3(0,0,0);
 
-	public float animationSpeed;
-
 	public float AnimationSpeed
 	{
 		get; set;
@@ -20,13 +18,13 @@ public class PlayerVehicleAnimation : MonoBehaviour
 
 	void Awake()
 	{
-		this.AnimationSpeed = 1;
+		this.AnimationSpeed = 0;
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
 		//Rotate
-		transform.Rotate(rotationSpeed * animationSpeed * Time.deltaTime, Space.Self);
+		transform.Rotate(rotationSpeed * AnimationSpeed * Time.deltaTime, Space.Self);
 	}
 }

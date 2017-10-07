@@ -12,20 +12,23 @@ public class GameManager : MonoBehaviour
 	{
 		MAIN_MENU,
 		FLYING,
-		CHOOSE_COLORS
+		CHOOSE_COLORS,
+		INTRO
 	}
 
 	[Inject]
 	private void Construct(
 		GameManagerStateMainMenu mainMenuState,
 		GameManagerStateFlying flyingState,
-		GameManagerStateShowColors showColorsState
+		GameManagerStateShowColors showColorsState,
+		GameManagerStateIntro introState
 	)
 	{
 		//Main menu state
 		states[GAME_STATE.MAIN_MENU] = mainMenuState;
 		states[GAME_STATE.FLYING] = flyingState;
 		states[GAME_STATE.CHOOSE_COLORS] = showColorsState;
+		states[GAME_STATE.INTRO] = introState;
 	}
 
 	void Start()

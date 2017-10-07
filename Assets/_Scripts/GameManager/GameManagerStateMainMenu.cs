@@ -18,6 +18,6 @@ public class GameManagerStateMainMenu : GameManagerState
 
 	public void StartToFly()
 	{
-		manager.SwitchState(GameManager.GAME_STATE.CHOOSE_COLORS);
+		manager.SwitchState(GameManager.GAME_STATE.INTRO);
 	}
 }

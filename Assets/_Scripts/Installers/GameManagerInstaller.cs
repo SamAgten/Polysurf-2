@@ -8,5 +8,6 @@ public class GameManagerInstaller : MonoInstaller<GameManagerInstaller>
         Container.Bind<GameManagerStateMainMenu>().FromNew().AsTransient();
         Container.Bind<GameManagerStateFlying>().FromNew().AsTransient();
         Container.Bind<GameManagerStateShowColors>().FromNew().AsTransient();
+        Container.Bind<GameManagerStateIntro>().FromNew().AsTransient();
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GameManagerState
+public abstract class GameManagerState : State
 {
 	protected GameManager manager;
 
@@ -10,20 +10,4 @@ public abstract class GameManagerState
 	{
 		manager = gameManager;
 	}
-
-	public virtual void OnStateEnter()
-	{
-
-	}
-
-	public virtual void OnStateExit()
-	{
-
-	}
-
-	public virtual void Tick()
-	{
-
-	}
-
 }

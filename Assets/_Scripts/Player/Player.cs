@@ -18,6 +18,11 @@ public class Player : MonoBehaviour
 		colorManager.onColorSelected += ChangeColor;
 	}
 
+	void Start()
+	{
+		Land();
+	}
+
 	public void ChangeVehicle(PlayerVehicle vehicle)
 	{
 		if(playerVehicle != null)
@@ -37,5 +42,16 @@ public class Player : MonoBehaviour
 	{
 		if(avatar != null)
 			avatar.SetColor(color);
+	}
+
+	public void Land()
+	{
+		if(avatar != null)
+			avatar.Land();
+	}
+
+	public void Boot()
+	{
+
 	}
 }
