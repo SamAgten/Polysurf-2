@@ -22,19 +22,9 @@ public class GameManagerStateIntro : GameManagerState
 	{
 		//Show color!
 		player.Boot();
+		player.ChangeColor(Color.red);
 
-		// //Can we spin up the player's avatar?
-		// PlayerVehicleAnimation animation = GameObject.FindObjectOfType<PlayerVehicleAnimation>();
-		// if(animation != null)
-		// {
-		// 	float targetSpeed = 1.5f;
-		// 	while(Mathf.Abs(animation.AnimationSpeed - targetSpeed) > 0.1f)
-		// 	{
-		// 		animation.AnimationSpeed = Mathf.Lerp(animation.AnimationSpeed, targetSpeed, Time.deltaTime * 2f);
-		// 		yield return null;
-		// 	}
-		// 	animation.AnimationSpeed = targetSpeed;
-		// }
+		yield return new WaitForSeconds(1.5f);
 
 		//1. Switch the camera to race position
 		cameraController.LerpTo(cameraController.flyPosition);

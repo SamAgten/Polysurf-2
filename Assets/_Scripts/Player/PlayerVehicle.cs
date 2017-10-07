@@ -6,5 +6,8 @@ using UnityEngine;
 public class PlayerVehicle : ScriptableObject 
 {
 	public PlayerVehicleAvatar vehicle;
-	public float moveSpeed = 1f;
+	
+	public float maxSpeed = 30f;
+	public float acceleration = 4f;
+	
 }

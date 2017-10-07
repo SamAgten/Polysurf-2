@@ -71,17 +71,17 @@ MonoBehaviour:
   depthOfField:
     m_Enabled: 0
     m_Settings:
-      focusDistance: 10
-      aperture: 5.6
-      focalLength: 50
+      focusDistance: 9.42
+      aperture: 13.3
+      focalLength: 100
       useCameraFov: 0
       kernelSize: 1
   motionBlur:
     m_Enabled: 0
     m_Settings:
-      shutterAngle: 270
-      sampleCount: 10
-      frameBlending: 0
+      shutterAngle: 256
+      sampleCount: 8
+      frameBlending: 1
   eyeAdaptation:
     m_Enabled: 0
     m_Settings:
@@ -102,8 +102,8 @@ MonoBehaviour:
       bloom:
         intensity: 2.83
         threshold: 1.1
-        softKnee: 0.5
-        radius: 4
+        softKnee: 0.489
+        radius: 3.81
         antiFlicker: 0
       lensDirt:
         texture: {fileID: 0}
@@ -289,7 +289,7 @@ MonoBehaviour:
     m_Enabled: 0
     m_Settings:
       colored: 0
-      intensity: 0.428
+      intensity: 0.231
       size: 2.48
       luminanceContribution: 0.8
   vignette:
