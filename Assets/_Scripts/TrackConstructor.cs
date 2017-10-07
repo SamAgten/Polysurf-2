@@ -45,6 +45,8 @@ public class TrackConstructor : MonoBehaviour {
         nextTubePosition = new Vector3();
 
         GetTrackLength();
+
+        trackHolder = new GameObject("Track").transform;
     }
 
     void GetTrackLength()
