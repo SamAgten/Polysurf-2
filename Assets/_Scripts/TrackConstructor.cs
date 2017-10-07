@@ -13,15 +13,25 @@ public class TrackConstructor : MonoBehaviour {
     public float pieceLength = 2.0f;
     public TubeTransformer tubeSegment;
     public GameObject joint;
+    public GameObject gate;
     public int drawNumber = 5;
-    public int warmupLength = 3;
+    public int warmupTubeLength = 3;
+    public int warmupGateLength = 2;
+
+    public int nrGateColors = 2;
+
+    private List<int> gateColors = new List<int>(); 
+
+    public float gateDistance = 10f;
 
     private int length;
     private bool initialized = false;
 
     private List<Vector2> trackTransforms = new List<Vector2>();
+    private List<Vector2> gates = new List<Vector2>();
     public Transform trackHolder;
-    private List<TubeTransformer> currentObjects = new List<TubeTransformer>();
+    private List<TubeTransformer> currentTubes = new List<TubeTransformer>();
+    private List<Gate> currentGates = new List<Gate>();
 
     private int currentSegment = 0;
 
@@ -46,6 +56,10 @@ public class TrackConstructor : MonoBehaviour {
 
         GetTrackLength();
 
+        for (int i = 0; i < nrGateColors; i++)
+        {
+            gateColors.Add(Random.Range(0, 3));
+        }
     }
 
     void GetTrackLength()
@@ -56,10 +70,11 @@ public class TrackConstructor : MonoBehaviour {
     void ConstructTrackStructure()
     {
         trackTransforms.Clear();
+        currentTubes.Clear();
         for (int i = 0; i < length; i++)
         {
             Vector2 orientation;
-            if (i < warmupLength)
+            if (i < warmupTubeLength)
             {
                 orientation = new Vector2();
             }
@@ -72,6 +87,21 @@ public class TrackConstructor : MonoBehaviour {
 
             trackTransforms.Add(orientation);
 
+        }
+    }
+
+    void ConstructGateStructure()
+    {
+        currentGates.Clear();
+
+        int nrOfGates = (int)((length-warmupGateLength) * pieceLength / gateDistance);
+
+        for (int i = 0; i < nrOfGates; i++)
+        {
+            float phi = Random.Range(0f, 2f * Mathf.PI);
+            int color = gateColors[Random.Range(0, gateColors.Count-1)];
+
+            gates.Add(new Vector2(phi, color));
         }
     }
 
@@ -92,9 +122,6 @@ public class TrackConstructor : MonoBehaviour {
         }
         else
         {
-            Destroy(currentObjects[0].gameObject);
-            currentObjects.Remove(currentObjects[0]);
-
             Vector2 currentTrans = trackTransforms[Math.Min(length, currentSegment + drawNumber)];
 
             currentPos = DrawTube(currentPos, currentTrans);
@@ -102,6 +129,11 @@ public class TrackConstructor : MonoBehaviour {
         }
 
         nextTubePosition = currentPos;
+    }
+
+    void DrawGate()
+    {
+        Vector3 position;
     }
 
     Vector3 GetDirection(float theta, float phi)
@@ -112,58 +144,74 @@ public class TrackConstructor : MonoBehaviour {
     Vector3 DrawTube(Vector3 currentPos, Vector2 transform)
     {
         Quaternion rotation = Quaternion.AngleAxis(90, new Vector3(0,1,0));
-        if (currentObjects.Count > 0)
+        if (currentTubes.Count > 0)
         {
-            rotation = currentObjects[currentObjects.Count - 1].daughterJoint.rotation;
+            rotation = currentTubes[currentTubes.Count - 1].daughterJoint.rotation;
         }
-        TubeTransformer instanceTube = Instantiate<TubeTransformer>(tubeSegment, currentPos, Quaternion.identity);
+        TubeTransformer instanceTube;
+        if (currentTubes.Count == drawNumber)
+        {
+            currentTubes[0].ResetJoint();
+            currentTubes[0].transform.position = currentPos;
+
+            instanceTube = currentTubes[0];
+        }
+        else
+        {
+            instanceTube = Instantiate<TubeTransformer>(tubeSegment, currentPos, Quaternion.identity);
+            currentTubes.Add(instanceTube);
+        }
         
         instanceTube.motherJoint.rotation = rotation;
         instanceTube.RotateJoint(transform[0], transform[1]);
 
         Vector3 targetPos = instanceTube.daughterJoint.position + -pieceLength / 2f * instanceTube.daughterJoint.right;
 
-        currentObjects.Add(instanceTube);
-
         instanceTube.transform.SetParent(trackHolder);
         return targetPos;
+    }
+
+    void DrawGate()
+    {
+
     }
 
     public Vector3 GetInverseDirection()
     {
         Vector3 direction = new Vector3();
-        if (currentObjects[0].motherJoint.position.z < 0)
+        if (currentTubes[0].motherJoint.position.z < 0)
         {
-            direction = currentObjects[0].motherJoint.position - currentObjects[0].daughterJoint.position;
+            direction = currentTubes[0].motherJoint.position - currentTubes[0].daughterJoint.position;
         }
         else
         {
-            direction = currentObjects[0].daughterJoint.position - currentObjects[1].motherJoint.position;
+            direction = currentTubes[0].daughterJoint.position - currentTubes[1].motherJoint.position;
         }
         return direction;
     }
     public Quaternion GetDaughterRotation(int hop = 0)
     {
-        return currentObjects[hop].daughterJoint.rotation;
+        return currentTubes[hop].daughterJoint.rotation;
     }
 
     public Quaternion GetMotherRotation(int hop = 0)
     {
-        return currentObjects[hop].motherJoint.rotation;
+        return currentTubes[hop].motherJoint.rotation;
     }
 
     public float GetJointDistance(int hop = 0)
     {
-        return Vector3.Distance(trackHolder.transform.position, currentObjects[hop].daughterJoint.position);
+        return Vector3.Distance(trackHolder.transform.position, currentTubes[hop].daughterJoint.position);
     }
 
 
     public void Translate(Vector3 translation)
     {
         trackHolder.transform.Translate(translation);
-        if (currentObjects[1].transform.position.z < 0)
+        if (currentTubes[1].transform.position.z < 0)
         {
             currentSegment += 1;
+            //currentSegment %= drawNumber;
             DrawTrack();
         }
     }

@@ -10,4 +10,9 @@ public class TubeTransformer : MonoBehaviour {
     {
         daughterJoint.Rotate(new Vector3(0f, Mathf.Rad2Deg*phi, Mathf.Rad2Deg*theta));
     }
+
+    public void ResetJoint()
+    {
+        daughterJoint.rotation = motherJoint.rotation;
+    }
 }
